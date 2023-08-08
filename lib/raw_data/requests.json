@@ -1,0 +1,18 @@
+{
+  "requestID": "3",
+  "requestDateTime": "Welcome to quick-type!",
+  "deliveryDateTime": "2",
+  "requestStatus":"date",
+  "requestAmount":786512,
+  "isFirstRequest": true,
+  "requestDetails":"this product description",
+  "customerDetails":"this product description",
+  "address": " block 19a",
+  "sellerID": 5,
+  "consumerContact":".....",
+  "requestType":"KG",
+  "discountDetails":"KG",
+  "riderDetails":"KG",
+  "discounted": false
+
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Welcome to quicktype!",
+  "quantity": 2,
+  "expiry":"date",
+  "quality":"Average",
+  "categoryID": 7,
+  "description":"this product description",
+  "price": 795,
+  "productID": "3",
+  "sellerID": 5,
+  "productImage":".....",
+  "unit":"KG",
+  "inStock": true
+
+}

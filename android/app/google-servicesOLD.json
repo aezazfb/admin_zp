@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "574551489741",
+    "project_id": "zestypantry",
+    "storage_bucket": "zestypantry.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:574551489741:android:6abca60fd2786b9408bd84",
+        "android_client_info": {
+          "package_name": "com.codigowidgets.admin_zp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "574551489741-i0j5opfe3ivk2o2pm2pf7ujpb0op5h98.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjBuVCnRnvC4GjaBY6fCu162E6bJk9YYw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "574551489741-i0j5opfe3ivk2o2pm2pf7ujpb0op5h98.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:574551489741:android:c5a749f621be721308bd84",
+        "android_client_info": {
+          "package_name": "com.codigowidgets.zestypantry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "574551489741-i0j5opfe3ivk2o2pm2pf7ujpb0op5h98.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjBuVCnRnvC4GjaBY6fCu162E6bJk9YYw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "574551489741-i0j5opfe3ivk2o2pm2pf7ujpb0op5h98.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
