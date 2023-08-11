@@ -13,7 +13,6 @@ dependencies:
   fluttertoast: 8.2.2
   firebase_messaging: 14.6.5
   flutter_local_notifications: 15.1.0+1
-  firebase_admin: ^0.2.0
   http: 0.13.0
   firebase_auth: 4.7.2
   flutter: 

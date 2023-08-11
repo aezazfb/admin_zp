@@ -1,0 +1,25 @@
+import 'package:firebase_admin/firebase_admin.dart';
+
+Platform.isAndroid?
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(apiKey: 'AIzaSyBjBuVCnRnvC4GjaBY6fCu162E6bJk9YYw',
+        appId: '1:574551489741:android:6abca60fd2786b9408bd84',
+        messagingSenderId: '574551489741', projectId: 'zestypantry')
+  ) :
+  await Firebase.initializeApp();
+
+
+  await FirebaseAuth.instance.signInWithEmailAndPassword(email: 'aezazfb@gmail.com', password: 'DarnmyfooT');
+
+    var credential = Credentials.applicationDefault();
+    credential ??= await Credentials.login();
+    var app = FirebaseAdmin.instance.initializeApp(AppOptions(
+        credential: credential,
+        projectId: 'zestypantry'));
+    try {
+      // get a user by email
+      var v = await app.auth().getUserByEmail('jane@doe.com');
+      print(v.toJson());
+    } on Exception catch (e) {
+      print(e.toString());
+    }

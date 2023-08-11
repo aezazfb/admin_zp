@@ -70,7 +70,7 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
               ElevatedButton(onPressed: (){
-                FirebaseApi().createPushNotification(titleCntrl.text, messageBodyCntrl.text);
+                //FirebaseApi().createPushNotification(titleCntrl.text, messageBodyCntrl.text);
               }, child: Text('Send Notification')),
 
               Icon(Icons.cabin),

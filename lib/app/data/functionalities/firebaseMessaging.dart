@@ -1,16 +1,15 @@
 import 'dart:convert';
 
 import 'package:admin_zp/globalVars.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 Future<void> backgroundMessageHandler(RemoteMessage theMsg) async {
-  print('Title: ${theMsg.notification?.title}');
-  print('Body: ${theMsg.notification?.body}');
-  print('Payload: ${theMsg.data}');
+  // print('Title: ${theMsg.notification?.title}');
+  // print('Body: ${theMsg.notification?.body}');
+  // print('Payload: ${theMsg.data}');
 }
 
 
@@ -26,6 +25,7 @@ class FirebaseApi{
   final _localAppOnNotifications = FlutterLocalNotificationsPlugin();
 
 
+  //This function is performed when notification is opened!
   void handleMessage(RemoteMessage? remoteMessage){
     if(remoteMessage == null) return;
 
@@ -89,7 +89,7 @@ class FirebaseApi{
     final fCMToken = await _firebaseMessaging.getToken();
 
     theFCMToken.value = fCMToken!;
-    print("This is fCMToken: $theFCMToken");
+    print("This is device fCMToken: $theFCMToken");
 
     // FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
 
@@ -102,16 +102,16 @@ class FirebaseApi{
   }
 
   //Sending msg //Access Token Required in Authorization Header
-  Future createPushNotification(String title, String messageBody) async {
+  Future createPushNotification(String title, String messageBody, String accessToken, String deviceFcm) async {
     final response = await http.post(
       Uri.parse('https://fcm.googleapis.com/v1/projects/zestypantry/messages:send'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ya29.a0AfB_byDGcJXDYS06G2-cWfhfQ4gD05D1n5mkD7aBd_POQIVETSyTnWeuL5GkTM-NfN3wTWVF5C1VQP65BCzdLt78oR3qL9c3Fb4sIEdIUDMUWlEBiV0-g0Mdp8bHRPTZj9I3_sox6xv44t8BNxNUUpwejcFD0LMaCgYKAbwSARMSFQHsvYlsajat7egC1Nx7fKOzAyrXag0166',
+        'Authorization': 'Bearer $accessToken',
       },
       body: jsonEncode(<String, dynamic>{
         "message":{
-          "token":"emlV9IpnQNiMzrxOuwFClQ:APA91bHL8-tsmSaaRNoEWaNNsuwzHu9-PSDETUrloyrGiYxg3DFwMgcdTON5zTNNAEO8lavToOnYBbci-mfJA91a42UkmRiMR6qB1KXOqLxcROmVJp4r65LgxxqWGvNaJvdpYqQehBzd",
+          "token":deviceFcm,
           "data":{},
           "notification":{
             "title":title,
