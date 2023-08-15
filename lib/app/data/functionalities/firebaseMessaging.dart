@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:admin_zp/globalVars.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:googleapis_auth/auth.dart';
+import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart' as http;
 
 Future<void> backgroundMessageHandler(RemoteMessage theMsg) async {
@@ -88,8 +91,8 @@ class FirebaseApi{
 
     final fCMToken = await _firebaseMessaging.getToken();
 
-    theFCMToken.value = fCMToken!;
-    print("This is device fCMToken: $theFCMToken");
+    thisDeviceFCMToken.value = fCMToken!;
+    print("This is device fCMToken: $thisDeviceFCMToken");
 
     // FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler);
 
@@ -130,5 +133,29 @@ class FirebaseApi{
       // then throw an exception.
       throw Exception(response.body);
     }
+  }
+
+
+  Future<String> generateAccessToken() async {
+    // Load the service account JSON key from file
+    final String serviceAccountJson = await rootBundle.loadString('lib/assets/service-account.json'); // Update path
+
+    // Parse the JSON
+    final Map<String, dynamic> credentialsJson = json.decode(serviceAccountJson);
+
+    // Create a ServiceAccountCredentials instance
+    final ServiceAccountCredentials credentials =
+    ServiceAccountCredentials.fromJson(credentialsJson);
+
+    // Create a client
+    final client = await clientViaServiceAccount(credentials, ['https://www.googleapis.com/auth/firebase.messaging']);
+
+    // Generate an access token
+    final AccessCredentials accessCredentials = client.credentials;
+    final String accessToken = accessCredentials.accessToken.data;
+
+    //print('Access Token: $accessToken');
+
+    return accessToken;
   }
 }

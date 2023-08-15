@@ -13,9 +13,11 @@ dependencies:
   fluttertoast: 8.2.2
   firebase_messaging: 14.6.5
   flutter_local_notifications: 15.1.0+1
-  http: 0.13.0
+  googleapis_auth:
+  http:
   firebase_auth: 4.7.2
-  flutter: 
+  googleapis:
+  flutter:
     sdk: flutter
 
 dev_dependencies: 
@@ -25,4 +27,8 @@ dev_dependencies:
 
 flutter: 
   uses-material-design: true
+
+
+  assets:
+    - lib/assets/
 

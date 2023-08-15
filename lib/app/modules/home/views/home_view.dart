@@ -1,5 +1,7 @@
 import 'package:admin_zp/app/data/functionalities/firebaseMessaging.dart';
 import 'package:admin_zp/app/modules/home/widgets/AddProductWidget.dart';
+import 'package:admin_zp/generateToken.dart';
+import 'package:admin_zp/globalVars.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -69,8 +71,10 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
               ),
-              ElevatedButton(onPressed: (){
-                //FirebaseApi().createPushNotification(titleCntrl.text, messageBodyCntrl.text);
+              ElevatedButton(onPressed: () async {
+                // FirebaseApi().createPushNotification(titleCntrl.text, messageBodyCntrl.text);
+                FirebaseApi().createPushNotification("New Request", "reqeust body is this", await FirebaseApi().generateAccessToken(), adminDeviceFcm);
+                Get.to(MyHomePage());
               }, child: Text('Send Notification')),
 
               Icon(Icons.cabin),

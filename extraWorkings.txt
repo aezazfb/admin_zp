@@ -11,6 +11,7 @@ Platform.isAndroid?
 
   await FirebaseAuth.instance.signInWithEmailAndPassword(email: 'aezazfb@gmail.com', password: 'DarnmyfooT');
 
+
     var credential = Credentials.applicationDefault();
     credential ??= await Credentials.login();
     var app = FirebaseAdmin.instance.initializeApp(AppOptions(
@@ -23,3 +24,5 @@ Platform.isAndroid?
     } on Exception catch (e) {
       print(e.toString());
     }
+
+      oauth2_client: ^3.2.1
