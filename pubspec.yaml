@@ -10,14 +10,16 @@ dependencies:
   get: 4.6.5
   cloud_firestore: 4.8.4
   firebase_core: 2.15.0
+  firebase_storage:
   fluttertoast: 8.2.2
   firebase_messaging: 14.6.5
   flutter_local_notifications: 15.1.0+1
-  googleapis_auth:
-  http:
+  googleapis_auth: any
+  http: any
   firebase_auth: 4.7.2
-  googleapis:
-  flutter:
+  file_picker: 5.5.0
+  googleapis: any
+  flutter: 
     sdk: flutter
 
 dev_dependencies: 
@@ -26,9 +28,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter: 
-  uses-material-design: true
-
-
-  assets:
+  assets: 
     - lib/assets/
+  uses-material-design: true
 

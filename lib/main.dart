@@ -14,6 +14,7 @@ void main() async {
 
   await Firebase.initializeApp();
 
+  await FirebaseAuth.instance.signInAnonymously();
 
   await FirebaseApi().initNotification();
   runApp(

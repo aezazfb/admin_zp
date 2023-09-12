@@ -1,19 +1,81 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:admin_zp/app/data/models/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class AddProductWidget extends StatelessWidget {
+class AddProductWidget extends StatefulWidget {
   AddProductWidget({Key? key}) : super(key: key);
 
+  @override
+  State<AddProductWidget> createState() => _AddProductWidgetState();
+}
+
+class _AddProductWidgetState extends State<AddProductWidget> {
   final FirebaseFirestore theDatabase = FirebaseFirestore.instance;
+
+  PlatformFile? pickedFIle;
+
+  Future selectFile() async{
+    if(itemImageUrl != ""){
+      FirebaseStorage.instance.refFromURL(itemImageUrl).delete();
+    }
+    final result = await FilePicker.platform.pickFiles();
+    if(result == null) return;
+
+    setState(() {
+      pickedFIle = result.files.first;
+    });
+
+    uploadFIle();
+  }
+
+  UploadTask? uploadTask;
+  String itemImageUrl = "";
+  bool showImage = false;
+  bool imageUploaded = false;
+
+  Future uploadFIle() async {
+
+
+    final path = 'itemImages/${pickedFIle!.name}';
+    final file = File(pickedFIle!.path!);
+
+    final ref =  FirebaseStorage.instance.ref().child(path);
+    //ref.putFile(file);
+
+
+    setState(() async{
+      imageUploaded = false;
+
+      uploadTask = ref.putFile(file);
+
+      final snapSHot = await uploadTask!.whenComplete(() {
+
+      });
+      itemImageUrl = await snapSHot.ref.getDownloadURL();
+    });
+
+    setState(() {
+      uploadTask = null;
+      imageUploaded = true;
+    });
+  }
+
   addProduct(Product productData) async {
     await theDatabase.collection("product").add(productData.toJson()).whenComplete(() => Fluttertoast.showToast(msg: "New Product added!"));
   }
 
   TextEditingController nameCtrl = TextEditingController();
+
   TextEditingController mobileCtrl  = TextEditingController();
+
   TextEditingController addressCtrl = TextEditingController();
+
   TextEditingController descrCtrl = TextEditingController();
 
   final CollectionReference _red =
@@ -130,6 +192,20 @@ class AddProductWidget extends StatelessWidget {
                   ),
                 ),
               ),
+              ElevatedButton(onPressed: selectFile, child: const Text("Select File")),
+              ElevatedButton(onPressed: (){
+                setState(() {
+                  showImage = !showImage;
+                });
+              }, child: Text(showImage ? "Hide Image" : "Show Image")),
+              if(pickedFIle != null)Container(
+                color: Colors.blue[100],
+                child: !showImage ? Center(
+                  child: Text(pickedFIle!.name),
+                ) : Image.file(File(pickedFIle!.path!),
+                width: double.infinity,
+                fit: BoxFit.contain,),
+              ),
               const SizedBox(height: 50,),
               InkWell(
                 onTap: () {
@@ -144,13 +220,37 @@ class AddProductWidget extends StatelessWidget {
                   //   'expiry': addressCtrl.text,
                   //   'quantity':int.parse(mobileCtrl.text.isNotEmpty == true ? mobileCtrl.text : "0")
                   // }).whenComplete(() => Fluttertoast.showToast(msg: "New Item added!"));
+                  // uploadFIle().whenComplete(() {
+                  //
+                  // });
+                  //
+                  // if(imageUploaded){
+                  //   addProduct(Product(
+                  //       name: nameCtrl.text,
+                  //       price: int.parse(addressCtrl.text),
+                  //       unit: mobileCtrl.text.isNotEmpty == true ? mobileCtrl.text : "gram",
+                  //       description: descrCtrl.text,
+                  //       productImage: itemImageUrl
+                  //   )).whenComplete(() => Fluttertoast.showToast(msg: "New Product added!"));
+                  //
+                  //
+                  //   nameCtrl.clear();
+                  //   addressCtrl.clear();
+                  //   mobileCtrl.clear();
+                  //   descrCtrl.clear();
+                  //   setState(() {
+                  //     itemImageUrl = "";
+                  //   });
+                  // }
 
                   addProduct(Product(
-                    name: nameCtrl.text,
-                    price: int.parse(addressCtrl.text),
-                    unit: mobileCtrl.text.isNotEmpty == true ? mobileCtrl.text : "gram",
-                    description: descrCtrl.text
+                      name: nameCtrl.text,
+                      price: int.parse(addressCtrl.text),
+                      unit: mobileCtrl.text.isNotEmpty == true ? mobileCtrl.text : "gram",
+                      description: descrCtrl.text,
+                      productImage: itemImageUrl
                   )).whenComplete(() => Fluttertoast.showToast(msg: "New Product added!"));
+
 
                 },
                 child: Container(
